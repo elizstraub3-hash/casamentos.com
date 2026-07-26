@@ -15,11 +15,14 @@
   <!-- ===== NAV ===== -->
   <header class="nav" id="topo">
     <div class="nav__inner">
-      <a href="#topo" class="nav__brand">F <span>&amp;</span> A</a>
+      <a href="#topo" class="nav__brand" aria-label="Início">
+        <img src="Convite para casamento aquarelado e elegante azul (1).jpg" alt="Monograma A &amp; F" class="nav__monogram" />
+      </a>
       <nav class="nav__links" aria-label="Navegação principal">
         <a href="#historia">Nossa História</a>
         <a href="#contagem">Contagem</a>
         <a href="#detalhes">O Grande Dia</a>
+        <a href="#presente">Presente</a>
         <a href="#recado">Recados</a>
       </nav>
     </div>
@@ -150,6 +153,44 @@
     </div>
   </section>
 
+  <!-- ===== PRESENTE VIA PIX ===== -->
+  <section class="section gift" id="presente">
+    <div class="section__head">
+      <p class="eyebrow">Um carinho a mais</p>
+      <h2 class="section__title">Presente via Pix</h2>
+    </div>
+    <div class="gift__intro">
+      <p>
+        A sua presença já é o maior presente para nós. Mas, se desejar nos abençoar com
+        um agrado para começarmos essa nova fase, deixamos aqui a nossa chave Pix, com todo
+        o carinho. &#128153;
+      </p>
+    </div>
+
+    <div class="gift__card">
+      <div class="gift__qr" id="pix-qr">
+        <img src="pix-qrcode.png" alt="QR Code Pix para presentear Fernanda e Alex" width="220" height="220" />
+        <span class="gift__qr-hint">Aponte a câmera do seu banco</span>
+      </div>
+
+      <div class="gift__info">
+        <span class="gift__label">Chave Pix (CPF)</span>
+        <p class="gift__key" id="pix-key" data-key="10595735983">105.957.359-83</p>
+        <span class="gift__holder">Fernanda &amp; Alex</span>
+
+        <button type="button" class="btn btn--dark" id="pix-copy-key">Copiar chave</button>
+
+        <div class="gift__copiacola">
+          <span class="gift__label">Pix Copia e Cola</span>
+          <code class="gift__code" id="pix-brcode">00020126330014br.gov.bcb.pix0111105957359835204000053039865802BR5915FERNANDA E ALEX6007COLOMBO62070503***63042831</code>
+          <button type="button" class="btn btn--ghost" id="pix-copy-brcode">Copiar código Pix</button>
+        </div>
+
+        <p class="gift__feedback" id="pix-feedback" hidden></p>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== RECADO / RSVP ===== -->
   <section class="section rsvp" id="recado">
     <div class="section__head">
@@ -185,6 +226,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
+    <img src="Convite para casamento aquarelado e elegante azul (1).jpg" alt="Monograma A &amp; F" class="footer__monogram" />
     <p class="footer__names">Fernanda &amp; Alex</p>
     <div class="hero__divider hero__divider--dark" aria-hidden="true"><span></span>&#10084;<span></span></div>
     <p class="footer__note">Com amor, esperamos você. &middot; 31.10.2026</p>

@@ -11,6 +11,7 @@ Site para os convidados do casamento de **Fernanda &amp; Alex**.
 - **Nossa História** — linha do tempo do casal
 - **Contagem Regressiva** — tempo restante até o grande dia (ao vivo)
 - **O Grande Dia** — data, local (com link para o mapa) e traje
+- **Presente via Pix** — chave Pix (CPF), botão "copiar chave", Pix Copia e Cola e QR Code
 - **Recados / Confirmação** — os convidados deixam mensagem e confirmam presença
 
 ## Como ver o site

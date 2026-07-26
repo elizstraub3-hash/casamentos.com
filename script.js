@@ -85,9 +85,63 @@ form.addEventListener("submit", function (e) {
   form.reset();
 });
 
+/* ----- Presente via Pix: botões de copiar ----- */
+const pixFeedback = document.getElementById("pix-feedback");
+
+function showPixFeedback(msg) {
+  if (!pixFeedback) return;
+  pixFeedback.hidden = false;
+  pixFeedback.textContent = msg;
+  clearTimeout(showPixFeedback._t);
+  showPixFeedback._t = setTimeout(() => {
+    pixFeedback.hidden = true;
+  }, 3500);
+}
+
+function copyText(text, successMsg) {
+  const done = () => showPixFeedback(successMsg);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+  function fallbackCopy() {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      done();
+    } catch (e) {
+      showPixFeedback("Não foi possível copiar. Copie manualmente, por favor.");
+    }
+    document.body.removeChild(ta);
+  }
+}
+
+const btnCopyKey = document.getElementById("pix-copy-key");
+if (btnCopyKey) {
+  btnCopyKey.addEventListener("click", () => {
+    const keyEl = document.getElementById("pix-key");
+    const key = keyEl.getAttribute("data-key") || keyEl.textContent.trim();
+    copyText(key, "Chave Pix copiada! 💙");
+  });
+}
+
+const btnCopyBr = document.getElementById("pix-copy-brcode");
+if (btnCopyBr) {
+  btnCopyBr.addEventListener("click", () => {
+    const brcode = document.getElementById("pix-brcode").textContent.trim();
+    copyText(brcode, "Código Pix copiado! Cole no app do seu banco 💙");
+  });
+}
+
 /* ----- Animação de revelação ao rolar ----- */
 const revealTargets = document.querySelectorAll(
-  ".timeline__item, .detail-card, .story__intro, .rsvp__intro"
+  ".timeline__item, .detail-card, .story__intro, .rsvp__intro, .gift__intro, .gift__card"
 );
 revealTargets.forEach((t) => t.classList.add("reveal"));
 
