@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fernanda &amp; Alex &middot; Nosso Casamento</title>
+  <meta name="description" content="Site do casamento de Fernanda e Alex. História do casal, contagem regressiva e todas as informações para os nossos convidados." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <header class="nav" id="topo">
+    <div class="nav__inner">
+      <a href="#topo" class="nav__brand">F <span>&amp;</span> A</a>
+      <nav class="nav__links" aria-label="Navegação principal">
+        <a href="#historia">Nossa História</a>
+        <a href="#contagem">Contagem</a>
+        <a href="#detalhes">O Grande Dia</a>
+        <a href="#recado">Recados</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__kicker">Vamos casar</p>
+      <h1 class="hero__names">Fernanda <span class="amp">&amp;</span> Alex</h1>
+      <div class="hero__divider" aria-hidden="true">
+        <span></span>&#10084;<span></span>
+      </div>
+      <p class="hero__date">Sábado &middot; 31 de Outubro de 2026 &middot; 15h</p>
+      <a href="#recado" class="btn btn--light">Confirmar presença</a>
+    </div>
+    <a href="#historia" class="hero__scroll" aria-label="Rolar para baixo">&#8964;</a>
+  </section>
+
+  <!-- ===== HISTÓRIA ===== -->
+  <section class="section story" id="historia">
+    <div class="section__head">
+      <p class="eyebrow">Como tudo começou</p>
+      <h2 class="section__title">A nossa história</h2>
+    </div>
+
+    <div class="story__intro">
+      <p>
+        Dizem que o amor chega quando menos esperamos &mdash; e com a gente não foi diferente.
+        De um encontro despretensioso a uma vida inteira pela frente, cada capítulo nos trouxe
+        até aqui. Este é um pedacinho da nossa história, para dividir com quem faz parte dela.
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline__item">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__card">
+          <span class="timeline__year">2019</span>
+          <h3>O primeiro encontro</h3>
+          <p>
+            Um café que era pra durar meia hora e virou uma conversa de horas. Foi ali que
+            percebemos que aquele dia tinha algo diferente &mdash; e que a gente não queria
+            que acabasse.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__card">
+          <span class="timeline__year">2021</span>
+          <h3>Morar juntos</h3>
+          <p>
+            Entre plantas, um sofá que a gente demorou para escolher e muitas noites de série,
+            construímos o nosso primeiro lar. Aprendemos que o amor também mora nos detalhes
+            do dia a dia.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__card">
+          <span class="timeline__year">2025</span>
+          <h3>O pedido</h3>
+          <p>
+            Ao pôr do sol, com o coração acelerado e a voz tremendo, veio a pergunta mais
+            importante de todas. E a resposta, claro, foi um &ldquo;sim&rdquo; cheio de lágrimas
+            e sorrisos.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline__item">
+        <div class="timeline__dot" aria-hidden="true"></div>
+        <div class="timeline__card">
+          <span class="timeline__year">2026</span>
+          <h3>O grande dia</h3>
+          <p>
+            Agora chegou a hora de celebrar esse amor ao lado de quem amamos. E não seria a
+            mesma coisa sem você por perto.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTAGEM REGRESSIVA ===== -->
+  <section class="section countdown" id="contagem">
+    <div class="countdown__inner">
+      <p class="eyebrow eyebrow--light">Falta pouco</p>
+      <h2 class="section__title section__title--light">Contagem regressiva</h2>
+      <div class="countdown__grid" id="countdown" role="timer" aria-live="polite">
+        <div class="countdown__box"><span class="countdown__num" id="cd-days">00</span><span class="countdown__label">Dias</span></div>
+        <div class="countdown__box"><span class="countdown__num" id="cd-hours">00</span><span class="countdown__label">Horas</span></div>
+        <div class="countdown__box"><span class="countdown__num" id="cd-mins">00</span><span class="countdown__label">Minutos</span></div>
+        <div class="countdown__box"><span class="countdown__num" id="cd-secs">00</span><span class="countdown__label">Segundos</span></div>
+      </div>
+      <p class="countdown__msg" id="countdown-msg">para dizermos &ldquo;sim&rdquo;</p>
+    </div>
+  </section>
+
+  <!-- ===== DETALHES DO GRANDE DIA ===== -->
+  <section class="section details" id="detalhes">
+    <div class="section__head">
+      <p class="eyebrow">Anote na agenda</p>
+      <h2 class="section__title">O grande dia</h2>
+    </div>
+    <div class="details__grid">
+      <div class="detail-card">
+        <div class="detail-card__icon" aria-hidden="true">&#128197;</div>
+        <h3>Quando</h3>
+        <p>Sábado, 31 de outubro de 2026<br />Cerimônia às 15h00</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon" aria-hidden="true">&#128205;</div>
+        <h3>Onde</h3>
+        <p>Chácara Deon<br />Rua Inácio Torques, 881<br />Roseira &middot; Colombo &middot; PR</p>
+        <a class="detail-card__link" href="https://www.google.com/maps/search/?api=1&amp;query=Chácara+Deon+Rua+Inácio+Torques+881+Roseira+Colombo+PR" target="_blank" rel="noopener">Ver no mapa</a>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card__icon" aria-hidden="true">&#128087;</div>
+        <h3>Traje</h3>
+        <p>Passeio completo<br />Evite branco, por favor &#128522;</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECADO / RSVP ===== -->
+  <section class="section rsvp" id="recado">
+    <div class="section__head">
+      <p class="eyebrow">Queremos você lá</p>
+      <h2 class="section__title">Deixe seu recado</h2>
+    </div>
+    <div class="rsvp__intro">
+      <p>Confirme sua presença e mande um carinho para os noivos. Vamos guardar cada palavra com muito amor.</p>
+    </div>
+
+    <form class="rsvp__form" id="rsvp-form" novalidate>
+      <div class="field">
+        <label for="nome">Seu nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" required />
+      </div>
+      <div class="field">
+        <label for="presenca">Você vai comparecer?</label>
+        <select id="presenca" name="presenca" required>
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option value="sim">Com certeza estarei lá! &#127881;</option>
+          <option value="talvez">Ainda não sei</option>
+          <option value="nao">Infelizmente não poderei ir</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mensagem">Recado para o casal</label>
+        <textarea id="mensagem" name="mensagem" rows="4" placeholder="Escreva uma mensagem cheia de amor..."></textarea>
+      </div>
+      <button type="submit" class="btn btn--dark">Enviar recado</button>
+      <p class="rsvp__feedback" id="rsvp-feedback" hidden></p>
+    </form>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p class="footer__names">Fernanda &amp; Alex</p>
+    <div class="hero__divider hero__divider--dark" aria-hidden="true"><span></span>&#10084;<span></span></div>
+    <p class="footer__note">Com amor, esperamos você. &middot; 31.10.2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
