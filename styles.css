@@ -76,7 +76,7 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   text-align: center;
   color: var(--ink);
-  background-image: url("Convite para casamento aquarelado e elegante azul.jpg");
+  background-image: url("fundo-hero.jpg");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -189,6 +189,15 @@ img { max-width: 100%; display: block; }
   padding: 5.5rem 1.5rem;
 }
 .section__head { text-align: center; margin-bottom: 3rem; }
+.ornament {
+  display: block;
+  width: clamp(150px, 26vw, 230px);
+  height: auto;
+  margin: 1.1rem auto 0;
+  opacity: 0.95;
+  pointer-events: none;
+}
+.ornament--light { filter: brightness(0) invert(1) opacity(0.85); }
 .eyebrow {
   font-size: 0.78rem;
   letter-spacing: 0.32em;
@@ -277,8 +286,8 @@ img { max-width: 100%; display: block; }
   text-align: center;
   color: var(--white);
   background:
-    linear-gradient(135deg, rgba(53, 72, 90, 0.86), rgba(79, 113, 150, 0.72)),
-    radial-gradient(circle at 70% 30%, #6f93b8, #35485a 75%);
+    linear-gradient(135deg, rgba(53, 72, 90, 0.82), rgba(79, 113, 150, 0.68)),
+    url("praia.jpg") center/cover fixed;
 }
 .countdown__inner { max-width: 1080px; margin: 0 auto; }
 .countdown__grid {
@@ -525,6 +534,21 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* ===== Moldura decorativa (papelaria) ===== */
+.page-frame {
+  position: fixed;
+  inset: 10px;
+  z-index: 45;
+  pointer-events: none;
+  background-image: url("moldura.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+}
+@media (max-width: 900px) {
+  .page-frame { display: none; }
 }
 
 /* ===== Animações ===== */
