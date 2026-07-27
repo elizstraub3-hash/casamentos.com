@@ -72,21 +72,20 @@ img { max-width: 100%; display: block; }
   position: relative;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: var(--ink);
   background: radial-gradient(120% 90% at 50% 45%, #eaf3fb 0%, #f2f8fc 45%, #ffffff 100%);
   overflow: hidden;
+  padding: 6rem 1.5rem 3rem;
 }
 .hero__floral {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -52%);
-  width: min(900px, 94vw);
+  position: relative;
+  width: min(560px, 80vw);
   height: auto;
-  z-index: 1;
+  margin-bottom: 0.5rem;
   pointer-events: none;
   user-select: none;
   animation: fadeIn 1.6s ease both;
@@ -95,7 +94,7 @@ img { max-width: 100%; display: block; }
 .hero__content {
   position: relative;
   z-index: 2;
-  padding: 2rem 1.5rem;
+  padding: 0 1.5rem;
   animation: fadeUp 1.1s ease both;
 }
 .hero__kicker {
@@ -112,7 +111,6 @@ img { max-width: 100%; display: block; }
   line-height: 1.05;
   letter-spacing: 0.02em;
   color: var(--ink);
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.9);
 }
 .hero__names .amp { font-family: var(--script); color: var(--gold-dark); font-weight: 400; }
 .hero__date {
