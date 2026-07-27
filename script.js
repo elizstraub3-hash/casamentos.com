@@ -81,19 +81,6 @@ if (muralTrack && muralPrev && muralNext) {
   muralNext.addEventListener("click", () => muralTrack.scrollBy({ left: passo(), behavior: "smooth" }));
 }
 
-/* ----- Contador de caracteres do recado ----- */
-const msgArea = document.getElementById("mensagem");
-const msgCounter = document.getElementById("msg-counter");
-if (msgArea && msgCounter) {
-  const MIN = 50;
-  const atualizar = () => {
-    const n = msgArea.value.trim().length;
-    msgCounter.textContent = n < MIN ? `${n} / ${MIN}` : `${n} caracteres`;
-    msgCounter.classList.toggle("ok", n >= MIN);
-  };
-  msgArea.addEventListener("input", atualizar);
-  atualizar();
-}
 
 /* ----- Presente via Pix: botões de copiar ----- */
 const pixFeedback = document.getElementById("pix-feedback");

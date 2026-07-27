@@ -167,10 +167,6 @@ if (form) {
       mostrar("Por favor, preencha seu nome e confirme sua presença.", true);
       return;
     }
-    if (mensagem.length < 50) {
-      mostrar(`Seu recado precisa ter pelo menos 50 caracteres (você escreveu ${mensagem.length}).`, true);
-      return;
-    }
 
     botao.disabled = true;
     const textoOriginal = botao.textContent;
