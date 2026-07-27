@@ -5,10 +5,23 @@
    ============================================================ */
 import { firebaseConfig, isConfigured } from "./firebase-config.js";
 
+/* E-mail do usuário criado no Firebase Authentication.
+   Os noivos digitam apenas a SENHA no painel; o e-mail é usado por baixo dos panos.
+   Se você criou o usuário com outro e-mail, troque aqui. */
+const ADMIN_EMAIL = "elizstraub3@gmail.com";
+
 const $ = (id) => document.getElementById(id);
 const loginBox = $("login-box");
 const dashboard = $("dashboard");
 const demoNote = $("demo-note");
+
+/* Esconde o campo de e-mail — o login é só por senha. */
+function esconderEmail() {
+  const emailField = $("email");
+  const emailLabel = document.querySelector('label[for="email"]');
+  if (emailField) { emailField.style.display = "none"; emailField.removeAttribute("required"); }
+  if (emailLabel) emailLabel.style.display = "none";
+}
 
 function escapeHtml(str) {
   return String(str ?? "")
@@ -92,6 +105,8 @@ if (isConfigured) {
     }
   }
 
+  esconderEmail();
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       loginBox.classList.add("hidden");
@@ -109,10 +124,10 @@ if (isConfigured) {
     msg.textContent = "Entrando...";
     msg.classList.remove("err");
     try {
-      await signInWithEmailAndPassword(auth, $("email").value.trim(), $("senha").value);
+      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, $("senha").value);
       msg.textContent = "";
     } catch (err) {
-      msg.textContent = "E-mail ou senha incorretos.";
+      msg.textContent = "Senha incorreta.";
       msg.classList.add("err");
     }
   });
