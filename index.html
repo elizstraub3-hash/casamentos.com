@@ -7,7 +7,7 @@
   <meta name="description" content="Site do casamento de Fernanda e Alex. História do casal, contagem regressiva e todas as informações para os nossos convidados." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -34,13 +34,28 @@
   <section class="hero">
     <img src="ornamento-floral.png" alt="" class="hero__floral" />
     <div class="hero__content">
+      <img src="monograma-af.png" alt="Monograma A &amp; F" class="hero__monogram" />
       <p class="hero__kicker">Vamos casar</p>
       <h1 class="hero__names">Fernanda <span class="amp">&amp;</span> Alex</h1>
-      <div class="hero__divider" aria-hidden="true">
-        <span></span>&#10084;<span></span>
+
+      <div class="hero__date">
+        <div class="hero__date-col">
+          <span class="hero__date-label">Sábado</span>
+        </div>
+        <div class="hero__date-col hero__date-col--main">
+          <span class="hero__date-day">31</span>
+          <span class="hero__date-sub">Outubro &middot; 2026</span>
+        </div>
+        <div class="hero__date-col">
+          <span class="hero__date-label">15h00</span>
+        </div>
       </div>
-      <p class="hero__date">Sábado &middot; 31 de Outubro de 2026 &middot; 15h</p>
-      <a href="#recado" class="btn btn--dark">Confirmar presença</a>
+
+      <p class="hero__quote">&ldquo;Que a nossa história de amor seja tão eterna quanto o mar.&rdquo;</p>
+
+      <a href="#recado" class="btn btn--dark btn--heart">
+        <span class="btn__heart" aria-hidden="true">&#10084;</span> Confirmar presença
+      </a>
     </div>
     <a href="#historia" class="hero__scroll" aria-label="Rolar para baixo">&#8964;</a>
   </section>
