@@ -76,22 +76,26 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   text-align: center;
   color: var(--ink);
-  background-image: url("fundo-hero.jpg");
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  background: radial-gradient(120% 90% at 50% 45%, #eaf3fb 0%, #f2f8fc 45%, #ffffff 100%);
   overflow: hidden;
 }
-.hero__overlay {
+.hero__floral {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(245, 249, 252, 0.15) 0%, rgba(245, 249, 252, 0.45) 45%, rgba(245, 249, 252, 0.15) 100%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  width: min(900px, 94vw);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  animation: fadeIn 1.6s ease both;
 }
+.hero__overlay { display: none; }
 .hero__content {
   position: relative;
   z-index: 2;
   padding: 2rem 1.5rem;
-  margin-top: 8vh;
   animation: fadeUp 1.1s ease both;
 }
 .hero__kicker {
@@ -108,7 +112,7 @@ img { max-width: 100%; display: block; }
   line-height: 1.05;
   letter-spacing: 0.02em;
   color: var(--ink);
-  text-shadow: 0 2px 18px rgba(245, 249, 252, 0.7);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.9);
 }
 .hero__names .amp { font-family: var(--script); color: var(--gold-dark); font-weight: 400; }
 .hero__date {
@@ -555,6 +559,10 @@ img { max-width: 100%; display: block; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
