@@ -50,7 +50,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if request.resource.data.nome is string
                     && request.resource.data.mensagem is string
-                    && request.resource.data.mensagem.size() > 0
+                    && request.resource.data.mensagem.size() >= 50
                     && request.resource.data.mensagem.size() < 1000;
       allow update, delete: if request.auth != null;
     }

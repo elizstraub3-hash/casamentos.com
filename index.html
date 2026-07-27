@@ -40,7 +40,6 @@
     <img src="ornamento-floral.png" alt="" class="hero__floral-bg" aria-hidden="true" />
     <div class="hero__content">
       <img src="monograma-af.png" alt="Monograma A &amp; F" class="hero__monogram" />
-      <p class="hero__kicker">Vamos casar</p>
       <h1 class="hero__names">Fernanda <span class="amp">&amp;</span> Alex</h1>
 
       <div class="hero__divider" aria-hidden="true">
@@ -253,8 +252,9 @@
         <input type="number" id="acompanhantes" name="acompanhantes" min="1" max="20" value="1" />
       </div>
       <div class="field">
-        <label for="mensagem">Recado para o casal</label>
-        <textarea id="mensagem" name="mensagem" rows="4" placeholder="Escreva uma mensagem cheia de amor..."></textarea>
+        <label for="mensagem">Recado para o casal <span class="field__hint">(mínimo 50 caracteres)</span></label>
+        <textarea id="mensagem" name="mensagem" rows="4" minlength="50" required placeholder="Escreva uma mensagem cheia de amor... (pelo menos 50 caracteres)"></textarea>
+        <span class="field__counter" id="msg-counter">0 / 50</span>
       </div>
       <button type="submit" class="btn btn--dark">Enviar confirmação e recado</button>
       <p class="rsvp__feedback" id="rsvp-feedback" hidden></p>
@@ -272,8 +272,12 @@
       <p>Mensagens deixadas por quem ama vocês. &#10084;</p>
     </div>
 
-    <div class="mural__grid" id="mural-grid" aria-live="polite">
-      <p class="mural__empty" id="mural-empty">Ainda não há recados. Seja o primeiro a deixar um carinho! &#128522;</p>
+    <div class="mural__carousel">
+      <button type="button" class="mural__arrow mural__arrow--prev" id="mural-prev" aria-label="Recado anterior">&#8249;</button>
+      <div class="mural__track" id="mural-grid" aria-live="polite">
+        <p class="mural__empty">Ainda não há recados. Seja o primeiro a deixar um carinho! &#128522;</p>
+      </div>
+      <button type="button" class="mural__arrow mural__arrow--next" id="mural-next" aria-label="Próximo recado">&#8250;</button>
     </div>
   </section>
 

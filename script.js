@@ -65,8 +65,35 @@ function updateCountdown() {
 updateCountdown();
 const timer = setInterval(updateCountdown, 1000);
 
-/* O formulário de confirmação e o mural de recados são tratados em recados.js
-   (integração com o Firebase). */
+/* O envio do formulário e a renderização do mural são tratados em recados.js
+   (integração com o Firebase). Aqui ficam só a navegação por setas e o contador. */
+
+/* ----- Carrossel do mural (setas) ----- */
+const muralTrack = document.getElementById("mural-grid");
+const muralPrev = document.getElementById("mural-prev");
+const muralNext = document.getElementById("mural-next");
+if (muralTrack && muralPrev && muralNext) {
+  const passo = () => {
+    const card = muralTrack.querySelector(".mural-card");
+    return card ? card.getBoundingClientRect().width + 22 : muralTrack.clientWidth * 0.85;
+  };
+  muralPrev.addEventListener("click", () => muralTrack.scrollBy({ left: -passo(), behavior: "smooth" }));
+  muralNext.addEventListener("click", () => muralTrack.scrollBy({ left: passo(), behavior: "smooth" }));
+}
+
+/* ----- Contador de caracteres do recado ----- */
+const msgArea = document.getElementById("mensagem");
+const msgCounter = document.getElementById("msg-counter");
+if (msgArea && msgCounter) {
+  const MIN = 50;
+  const atualizar = () => {
+    const n = msgArea.value.trim().length;
+    msgCounter.textContent = n < MIN ? `${n} / ${MIN}` : `${n} caracteres`;
+    msgCounter.classList.toggle("ok", n >= MIN);
+  };
+  msgArea.addEventListener("input", atualizar);
+  atualizar();
+}
 
 /* ----- Presente via Pix: botões de copiar ----- */
 const pixFeedback = document.getElementById("pix-feedback");
