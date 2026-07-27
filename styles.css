@@ -157,16 +157,13 @@ img { max-width: 100%; display: block; }
   z-index: 0;
   pointer-events: none;
 }
-/* Floral grande e suave ATRÁS dos nomes, baixa opacidade */
+/* Floral em cima, acima das escritas */
 .hero__floral-bg {
-  position: absolute;
-  top: 47%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(820px, 94vw);
+  position: relative;
+  width: min(540px, 82vw);
   height: auto;
-  opacity: 0.3;
-  z-index: 1;
+  margin: 0 auto 0.4rem;
+  z-index: 2;
   pointer-events: none;
   user-select: none;
   animation: fadeIn 1.8s ease both;
