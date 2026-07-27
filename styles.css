@@ -190,11 +190,11 @@ img { max-width: 100%; display: block; }
   color: var(--gold-dark);
 }
 .hero__names {
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(2.7rem, 9.4vw, 5.6rem);
-  line-height: 1.06;
-  letter-spacing: 0.005em;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 12vw, 7rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
   color: var(--logo-blue);
   white-space: nowrap;
 }
@@ -202,9 +202,8 @@ img { max-width: 100%; display: block; }
   font-family: var(--script);
   color: var(--champagne);
   font-weight: 400;
-  font-size: 0.82em;
-  padding: 0 0.08em;
-  vertical-align: 0.02em;
+  font-size: 1em;
+  padding: 0 0.05em;
 }
 /* Divisória decorativa com coração */
 .hero__divider {
@@ -848,8 +847,8 @@ img { max-width: 100%; display: block; }
   .countdown__label { font-size: 0.56rem; letter-spacing: 0.1em; }
   .countdown__msg { font-size: 1.6rem; }
 
-  /* Nomes na mesma linha no celular */
-  .hero__names { font-size: clamp(1.9rem, 8.4vw, 2.9rem); }
+  /* Nomes (cursivo) na mesma linha no celular */
+  .hero__names { font-size: clamp(2.4rem, 11vw, 3.8rem); }
 
   /* Data maior no celular; horário vai para a linha de baixo */
   .hero__date { flex-wrap: wrap; gap: 0.6rem 0; }
