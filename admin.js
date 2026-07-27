@@ -121,9 +121,20 @@ if (isConfigured) {
   $("refresh").addEventListener("click", carregar);
 } else {
   /* ================= MODO DEMONSTRAÇÃO ================= */
+  // Senha temporária do painel (só enquanto o Firebase não é configurado).
+  // Troque aqui pela senha que quiser. Depois do Firebase, o acesso passa a ser
+  // por e-mail e senha de verdade (Authentication).
+  const SENHA_DEMO = "fernanda&alex";
+
   demoNote.classList.remove("hidden");
-  loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
+  loginBox.classList.remove("hidden");
+  dashboard.classList.add("hidden");
+
+  // No modo demo pedimos apenas a senha (esconde o e-mail).
+  const emailField = $("email");
+  const emailLabel = document.querySelector('label[for="email"]');
+  if (emailField) { emailField.style.display = "none"; emailField.removeAttribute("required"); }
+  if (emailLabel) emailLabel.style.display = "none";
 
   const load = (k) => { try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch (e) { return []; } };
 
@@ -141,7 +152,18 @@ if (isConfigured) {
       ? recados.map((r) => `<tr><td>${escapeHtml(r.nome)}</td><td>${escapeHtml(r.mensagem)}</td><td>${escapeHtml(fmt(r.criadoEm))}</td><td>—</td></tr>`).join("")
       : '<tr><td colspan="4" class="empty">Nenhum recado ainda.</td></tr>';
   }
-  carregarDemo();
+  $("login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const msg = $("login-msg");
+    if ($("senha").value === SENHA_DEMO) {
+      loginBox.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+      carregarDemo();
+    } else {
+      msg.textContent = "Senha incorreta.";
+      msg.classList.add("err");
+    }
+  });
   $("refresh").addEventListener("click", carregarDemo);
   $("logout").addEventListener("click", () => { location.href = "index.html"; });
 }

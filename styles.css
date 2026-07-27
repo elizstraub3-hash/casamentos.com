@@ -734,20 +734,14 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
   color: var(--muted);
 }
-.footer__admin {
-  display: inline-block;
-  margin-top: 1.4rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-dark);
+.footer__heart {
+  color: var(--gold);
   text-decoration: none;
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  padding: 0.5rem 1.3rem;
-  transition: all 0.25s;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.25s, color 0.25s;
 }
-.footer__admin:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
+.footer__heart:hover { transform: scale(1.25); color: var(--gold-dark); }
 .footer__credit {
   margin-top: 1.4rem;
   font-size: 0.72rem;
@@ -811,10 +805,12 @@ img { max-width: 100%; display: block; }
   .countdown__label { font-size: 0.56rem; letter-spacing: 0.1em; }
   .countdown__msg { font-size: 1.6rem; }
 
-  /* Data do hero em duas linhas no celular */
-  .hero__date { flex-wrap: wrap; gap: 0.4rem 0; }
-  .hero__date-col { padding: 0.3rem clamp(0.7rem, 4vw, 1.2rem); }
-  .hero__date-col:nth-child(3)::before { display: none; }
+  /* Data do hero lado a lado no celular (igual ao desktop) */
+  .hero__date { flex-wrap: nowrap; }
+  .hero__date-col { padding: 0 0.5rem; min-height: 52px; }
+  .hero__date-label { font-size: 0.58rem; letter-spacing: 0.1em; }
+  .hero__date-day { font-size: 2.1rem; }
+  .hero__date-col + .hero__date-col::before { height: 38px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
