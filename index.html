@@ -20,34 +20,45 @@
       <a href="#topo" class="nav__brand" aria-label="Início">
         <img src="Convite para casamento aquarelado e elegante azul (1).jpg" alt="Monograma A &amp; F" class="nav__monogram" />
       </a>
-      <nav class="nav__links" aria-label="Navegação principal">
+      <button class="nav__toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-text">Menu</span>
+        <span class="nav__toggle-icon" aria-hidden="true"></span>
+      </button>
+      <nav class="nav__links" id="nav-links" aria-label="Navegação principal">
         <a href="#historia">Nossa História</a>
         <a href="#contagem">Contagem</a>
         <a href="#detalhes">O Grande Dia</a>
         <a href="#presente">Presente</a>
-        <a href="#recado">Recados</a>
+        <a href="#recado">Confirmar</a>
+        <a href="#mural">Mural</a>
       </nav>
     </div>
   </header>
 
   <!-- ===== HERO ===== -->
   <section class="hero">
-    <img src="ornamento-floral.png" alt="" class="hero__floral" />
+    <img src="ornamento-floral.png" alt="" class="hero__floral-bg" aria-hidden="true" />
     <div class="hero__content">
       <img src="monograma-af.png" alt="Monograma A &amp; F" class="hero__monogram" />
       <p class="hero__kicker">Vamos casar</p>
       <h1 class="hero__names">Fernanda <span class="amp">&amp;</span> Alex</h1>
 
+      <div class="hero__divider" aria-hidden="true">
+        <span></span>&#10084;<span></span>
+      </div>
+
       <div class="hero__date">
         <div class="hero__date-col">
           <span class="hero__date-label">Sábado</span>
         </div>
-        <div class="hero__date-col hero__date-col--main">
+        <div class="hero__date-col">
           <span class="hero__date-day">31</span>
-          <span class="hero__date-sub">Outubro &middot; 2026</span>
         </div>
         <div class="hero__date-col">
-          <span class="hero__date-label">15h00</span>
+          <span class="hero__date-label">Outubro<br />de 2026</span>
+        </div>
+        <div class="hero__date-col">
+          <span class="hero__date-label">15<br />horas</span>
         </div>
       </div>
 
@@ -216,11 +227,11 @@
   <section class="section rsvp" id="recado">
     <div class="section__head">
       <p class="eyebrow">Queremos você lá</p>
-      <h2 class="section__title">Deixe seu recado</h2>
+      <h2 class="section__title">Confirme sua presença</h2>
       <img src="ornamento-floral.png" alt="" class="ornament" />
     </div>
     <div class="rsvp__intro">
-      <p>Confirme sua presença e mande um carinho para os noivos. Vamos guardar cada palavra com muito amor.</p>
+      <p>Confirme sua presença e deixe um carinho para os noivos. Seu recado vai aparecer no mural logo abaixo. &#128153;</p>
     </div>
 
     <form class="rsvp__form" id="rsvp-form" novalidate>
@@ -238,12 +249,32 @@
         </select>
       </div>
       <div class="field">
+        <label for="acompanhantes">Quantas pessoas no total? (incluindo você)</label>
+        <input type="number" id="acompanhantes" name="acompanhantes" min="1" max="20" value="1" />
+      </div>
+      <div class="field">
         <label for="mensagem">Recado para o casal</label>
         <textarea id="mensagem" name="mensagem" rows="4" placeholder="Escreva uma mensagem cheia de amor..."></textarea>
       </div>
-      <button type="submit" class="btn btn--dark">Enviar recado</button>
+      <button type="submit" class="btn btn--dark">Enviar confirmação e recado</button>
       <p class="rsvp__feedback" id="rsvp-feedback" hidden></p>
     </form>
+  </section>
+
+  <!-- ===== MURAL DE RECADOS ===== -->
+  <section class="section mural" id="mural">
+    <div class="section__head">
+      <p class="eyebrow">Com carinho</p>
+      <h2 class="section__title">Mural de recados</h2>
+      <img src="ornamento-floral.png" alt="" class="ornament" />
+    </div>
+    <div class="rsvp__intro">
+      <p>Mensagens deixadas por quem ama vocês. &#10084;</p>
+    </div>
+
+    <div class="mural__grid" id="mural-grid" aria-live="polite">
+      <p class="mural__empty" id="mural-empty">Ainda não há recados. Seja o primeiro a deixar um carinho! &#128522;</p>
+    </div>
   </section>
 
   <!-- ===== FOOTER ===== -->
@@ -252,8 +283,11 @@
     <p class="footer__names">Fernanda &amp; Alex</p>
     <div class="hero__divider hero__divider--dark" aria-hidden="true"><span></span>&#10084;<span></span></div>
     <p class="footer__note">Com amor, esperamos você. &middot; 31.10.2026</p>
+    <a href="admin.html" class="footer__admin">Painel dos noivos</a>
+    <p class="footer__credit">Criado por <span>Eliz Straub</span></p>
   </footer>
 
   <script src="script.js"></script>
+  <script type="module" src="recados.js"></script>
 </body>
 </html>

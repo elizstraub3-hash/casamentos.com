@@ -5,6 +5,25 @@
    ============================================================ */
 const WEDDING_DATE = new Date("2026-10-31T15:00:00");
 
+/* ----- Menu dropdown do cabeçalho ----- */
+const navToggle = document.getElementById("nav-toggle");
+const navLinks = document.getElementById("nav-links");
+if (navToggle && navLinks) {
+  const fecharMenu = () => {
+    navLinks.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  };
+  navToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const aberto = navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", aberto ? "true" : "false");
+  });
+  navLinks.querySelectorAll("a").forEach((a) => a.addEventListener("click", fecharMenu));
+  document.addEventListener("click", (e) => {
+    if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) fecharMenu();
+  });
+}
+
 /* ----- Contagem regressiva ----- */
 const el = {
   days: document.getElementById("cd-days"),
@@ -46,44 +65,8 @@ function updateCountdown() {
 updateCountdown();
 const timer = setInterval(updateCountdown, 1000);
 
-/* ----- Formulário de recado / RSVP ----- */
-const form = document.getElementById("rsvp-form");
-const feedback = document.getElementById("rsvp-feedback");
-
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  const nome = document.getElementById("nome").value.trim();
-  const presenca = document.getElementById("presenca").value;
-
-  if (!nome || !presenca) {
-    feedback.hidden = false;
-    feedback.style.color = "#c0392b";
-    feedback.textContent = "Por favor, preencha seu nome e confirme sua presença.";
-    return;
-  }
-
-  // Guarda o recado localmente no navegador (demonstração — sem servidor).
-  try {
-    const recados = JSON.parse(localStorage.getItem("recados") || "[]");
-    recados.push({
-      nome: nome,
-      presenca: presenca,
-      mensagem: document.getElementById("mensagem").value.trim(),
-      data: new Date().toISOString(),
-    });
-    localStorage.setItem("recados", JSON.stringify(recados));
-  } catch (err) {
-    /* ignora se o localStorage não estiver disponível */
-  }
-
-  feedback.hidden = false;
-  feedback.style.color = "";
-  feedback.textContent =
-    presenca === "nao"
-      ? "Obrigado pelo carinho, " + nome + "! Vamos sentir sua falta ❤"
-      : "Obrigado, " + nome + "! Recebemos seu recado com muito amor ❤";
-  form.reset();
-});
+/* O formulário de confirmação e o mural de recados são tratados em recados.js
+   (integração com o Firebase). */
 
 /* ----- Presente via Pix: botões de copiar ----- */
 const pixFeedback = document.getElementById("pix-feedback");
