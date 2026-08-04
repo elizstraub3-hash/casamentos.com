@@ -664,6 +664,60 @@ img { max-width: 100%; display: block; }
   color: var(--gold-dark);
 }
 
+/* ===== Página de presentes (lista divertida) ===== */
+.presentes-hero {
+  text-align: center;
+  padding: 3rem 1.5rem 1rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.presentes-hero p {
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+.presentes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.6rem;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.presente-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 2rem 1.6rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(127, 163, 198, 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  transition: transform 0.3s ease;
+}
+.presente-card:hover { transform: translateY(-6px); }
+.presente-card__emoji { font-size: 2.6rem; line-height: 1; }
+.presente-card h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.presente-card__joke {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.55;
+  flex: 1;
+}
+.presente-card .btn { margin-top: 0.6rem; }
+.presente-card--pix {
+  background: linear-gradient(160deg, #eef4fa, #ffffff);
+  border: 1px dashed var(--gold);
+}
+
 /* ===== Mural de recados (carrossel) ===== */
 .mural { background: var(--cream); max-width: none; }
 .mural .section__head,
