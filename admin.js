@@ -5,10 +5,9 @@
    ============================================================ */
 import { firebaseConfig, isConfigured } from "./firebase-config.js";
 
-/* E-mail do usuário criado no Firebase Authentication.
-   Os noivos digitam apenas a SENHA no painel; o e-mail é usado por baixo dos panos.
-   Se você criou o usuário com outro e-mail, troque aqui. */
-const ADMIN_EMAIL = "elizstraub3@gmail.com";
+/* Senha do painel dos noivos. Os noivos entram digitando SÓ esta senha.
+   Para trocar a senha, mude aqui. */
+const SENHA_PAINEL = "noivos";
 
 const $ = (id) => document.getElementById(id);
 const loginBox = $("login-box");
@@ -65,7 +64,7 @@ function renderConfirmacoes(lista) {
 /* ================= FIREBASE ================= */
 if (isConfigured) {
   const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
-  const { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } =
+  const { getAuth, signInAnonymously, signOut, onAuthStateChanged } =
     await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
   const { getFirestore, collection, getDocs, deleteDoc, doc, query, orderBy } =
     await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
@@ -121,13 +120,19 @@ if (isConfigured) {
   $("login-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const msg = $("login-msg");
+    if ($("senha").value !== SENHA_PAINEL) {
+      msg.textContent = "Senha incorreta.";
+      msg.classList.add("err");
+      return;
+    }
     msg.textContent = "Entrando...";
     msg.classList.remove("err");
     try {
-      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, $("senha").value);
+      await signInAnonymously(auth);
       msg.textContent = "";
     } catch (err) {
-      msg.textContent = "Senha incorreta.";
+      console.error(err);
+      msg.textContent = "Não foi possível entrar. Verifique se o login anônimo está ativado no Firebase.";
       msg.classList.add("err");
     }
   });
