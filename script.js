@@ -24,6 +24,44 @@ if (navToggle && navLinks) {
   });
 }
 
+/* ----- Nossa música (player só de áudio via YouTube) ----- */
+const playerBtn = document.getElementById("player-btn");
+if (playerBtn) {
+  let ytPlayer = null;
+  let tocando = false;
+  const PLAY = "▶";      // ▶
+  const PAUSE = "⏸";     // ⏸
+
+  const atualizar = () => {
+    playerBtn.innerHTML = tocando ? PAUSE : PLAY;
+    playerBtn.setAttribute("aria-label", tocando ? "Pausar música" : "Tocar música");
+  };
+
+  // Carrega a API do YouTube uma vez
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+
+  window.onYouTubeIframeAPIReady = function () {
+    ytPlayer = new YT.Player("yt-audio", {
+      videoId: "51lOFuCR7dE",
+      playerVars: { playsinline: 1 },
+      events: {
+        onStateChange: (e) => {
+          tocando = e.data === YT.PlayerState.PLAYING;
+          atualizar();
+        },
+      },
+    });
+  };
+
+  playerBtn.addEventListener("click", () => {
+    if (!ytPlayer || typeof ytPlayer.playVideo !== "function") return;
+    if (tocando) ytPlayer.pauseVideo();
+    else ytPlayer.playVideo();
+  });
+}
+
 /* ----- Galeria do casal (visualizador) ----- */
 const galeriaImgs = Array.from(document.querySelectorAll(".galeria__item img"));
 const lightbox = document.getElementById("lightbox");

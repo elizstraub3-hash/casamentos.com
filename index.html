@@ -192,10 +192,15 @@
       <img src="ornamento-floral.png" alt="" class="ornament" />
     </div>
     <p class="musica__intro">A canção que embala a nossa história &mdash; e que tocou pertinho do dia do pedido. Dá o play e sinta com a gente. &#127925;</p>
-    <div class="musica__player">
-      <iframe src="https://www.youtube-nocookie.com/embed/51lOFuCR7dE" title="Nossa música - Jorge &amp; Mateus - O Que É Que Tem" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="player">
+      <span class="player__cover" aria-hidden="true"></span>
+      <div class="player__info">
+        <span class="player__song">O Que É Que Tem</span>
+        <span class="player__artist">Jorge &amp; Mateus</span>
+      </div>
+      <button class="player__btn" id="player-btn" type="button" aria-label="Tocar música">&#9654;</button>
     </div>
-    <p class="musica__nome">Jorge &amp; Mateus &mdash; O Que É Que Tem</p>
+    <div id="yt-audio" class="yt-hidden" aria-hidden="true"></div>
   </section>
 
   <!-- ===== CONTAGEM REGRESSIVA ===== -->
