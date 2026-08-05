@@ -42,6 +42,7 @@
       </button>
       <nav class="nav__links" id="nav-links" aria-label="Navegação principal">
         <a href="#historia">Nossa História</a>
+        <a href="#galeria">Álbum</a>
         <a href="#contagem">Contagem</a>
         <a href="#detalhes">O Grande Dia</a>
         <a href="#presente">Presente</a>
@@ -164,6 +165,23 @@
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERIA DO CASAL ===== -->
+  <section class="section galeria" id="galeria">
+    <div class="section__head">
+      <p class="eyebrow">Nossos momentos</p>
+      <h2 class="section__title">Álbum do casal</h2>
+      <img src="ornamento-floral.png" alt="" class="ornament" />
+    </div>
+    <div class="galeria__grid">
+      <button class="galeria__item" type="button"><img src="foto-1.jpg" alt="Fernanda e Alex na praia" loading="lazy" /></button>
+      <button class="galeria__item" type="button"><img src="foto-2.jpg" alt="Fernanda e Alex de mãos dadas" loading="lazy" /></button>
+      <button class="galeria__item" type="button"><img src="foto-3.jpg" alt="Fernanda e Alex ao pôr do sol" loading="lazy" /></button>
+      <button class="galeria__item" type="button"><img src="foto-4.jpg" alt="Fernanda e Alex" loading="lazy" /></button>
+      <button class="galeria__item" type="button"><img src="foto-5.jpg" alt="Fernanda e Alex" loading="lazy" /></button>
+      <button class="galeria__item" type="button"><img src="foto-6.jpg" alt="Fernanda e Alex" loading="lazy" /></button>
     </div>
   </section>
 
@@ -322,6 +340,14 @@
     <p class="footer__note">Com amor, esperamos você. &middot; 31.10.2026</p>
     <p class="footer__credit">Criado por <span>Eliz Straub</span></p>
   </footer>
+
+  <!-- Visualizador de fotos -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__btn lightbox__close" id="lb-close" aria-label="Fechar">&times;</button>
+    <button class="lightbox__btn lightbox__nav lightbox__prev" id="lb-prev" aria-label="Anterior">&#8249;</button>
+    <img id="lb-img" src="" alt="Foto do casal" />
+    <button class="lightbox__btn lightbox__nav lightbox__next" id="lb-next" aria-label="Próxima">&#8250;</button>
+  </div>
 
   <script src="script.js"></script>
   <script type="module" src="recados.js"></script>

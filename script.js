@@ -24,6 +24,32 @@ if (navToggle && navLinks) {
   });
 }
 
+/* ----- Galeria do casal (visualizador) ----- */
+const galeriaImgs = Array.from(document.querySelectorAll(".galeria__item img"));
+const lightbox = document.getElementById("lightbox");
+if (galeriaImgs.length && lightbox) {
+  const lbImg = document.getElementById("lb-img");
+  const fontes = galeriaImgs.map((i) => i.getAttribute("src"));
+  let atual = 0;
+  const mostrar = (i) => {
+    atual = (i + fontes.length) % fontes.length;
+    lbImg.src = fontes[atual];
+  };
+  const abrir = (i) => { mostrar(i); lightbox.classList.add("open"); lightbox.setAttribute("aria-hidden", "false"); };
+  const fechar = () => { lightbox.classList.remove("open"); lightbox.setAttribute("aria-hidden", "true"); };
+  galeriaImgs.forEach((img, i) => img.parentElement.addEventListener("click", () => abrir(i)));
+  document.getElementById("lb-close").addEventListener("click", fechar);
+  document.getElementById("lb-prev").addEventListener("click", (e) => { e.stopPropagation(); mostrar(atual - 1); });
+  document.getElementById("lb-next").addEventListener("click", (e) => { e.stopPropagation(); mostrar(atual + 1); });
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) fechar(); });
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") fechar();
+    else if (e.key === "ArrowLeft") mostrar(atual - 1);
+    else if (e.key === "ArrowRight") mostrar(atual + 1);
+  });
+}
+
 /* ----- Contagem regressiva ----- */
 const el = {
   days: document.getElementById("cd-days"),
