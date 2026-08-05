@@ -140,8 +140,15 @@ img { max-width: 100%; display: block; }
   color: var(--ink);
   background-color: var(--ivory);
   background-image:
-    radial-gradient(100% 70% at 50% 40%, #eaf3fb 0%, #f2f8fc 45%, var(--ivory) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    linear-gradient(180deg,
+      rgba(244, 249, 252, 0.45) 0%,
+      rgba(244, 249, 252, 0.78) 40%,
+      rgba(244, 249, 252, 0.78) 62%,
+      rgba(244, 249, 252, 0.55) 100%),
+    url("foto-3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
   padding: 7rem 1.5rem 4rem;
 }
