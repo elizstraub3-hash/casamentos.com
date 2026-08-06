@@ -680,6 +680,19 @@ img { max-width: 100%; display: block; }
   max-width: 560px;
   margin: 0 auto 2rem;
 }
+.spotify-player { max-width: 480px; margin: 0 auto; }
+.spotify-player iframe { display: block; box-shadow: var(--shadow); border-radius: 12px; }
+.musica__link { text-align: center; margin-top: 1.1rem; }
+.musica__link a {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--gold-dark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+}
+.musica__link a:hover { color: var(--ink); }
+
 .player {
   position: relative;
   max-width: 420px;
