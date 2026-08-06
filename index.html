@@ -311,8 +311,13 @@
         </select>
       </div>
       <div class="field">
-        <label for="acompanhantes">Quantas pessoas no total? (incluindo você)</label>
+        <label for="acompanhantes">Quantas pessoas vão no total? (incluindo você)</label>
         <input type="number" id="acompanhantes" name="acompanhantes" min="1" max="20" value="1" />
+      </div>
+      <div class="field" id="familia-wrap" hidden>
+        <label>Nome de cada pessoa <span class="field__hint">(obrigatório)</span></label>
+        <p class="field__note">É obrigatório informar o <strong>nome de cada integrante da sua família</strong> que vai ao casamento. A Fernanda e o Alex verão tudo. &#128153;</p>
+        <div id="familia-lista"></div>
       </div>
       <div class="field">
         <label for="mensagem">Recado para o casal <span class="field__hint">(opcional)</span></label>

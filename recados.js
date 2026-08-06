@@ -95,11 +95,12 @@ if (isConfigured) {
     }
   );
 
-  enviar = async ({ nome, presenca, acompanhantes, mensagem }) => {
+  enviar = async ({ nome, presenca, acompanhantes, mensagem, familia }) => {
     await addDoc(collection(db, "confirmacoes"), {
       nome,
       presenca,
       acompanhantes,
+      familia: familia || [nome],
       mensagem,
       criadoEm: serverTimestamp(),
     });
@@ -134,9 +135,9 @@ if (isConfigured) {
   };
   renderLocal();
 
-  enviar = async ({ nome, presenca, acompanhantes, mensagem }) => {
+  enviar = async ({ nome, presenca, acompanhantes, mensagem, familia }) => {
     const c = load(KEY_C);
-    c.push({ nome, presenca, acompanhantes, mensagem, criadoEm: new Date().toISOString() });
+    c.push({ nome, presenca, acompanhantes, familia: familia || [nome], mensagem, criadoEm: new Date().toISOString() });
     localStorage.setItem(KEY_C, JSON.stringify(c));
     if (mensagem) {
       const r = load(KEY_R);
@@ -150,6 +151,34 @@ if (isConfigured) {
 /* ---------- envio do formulário ---------- */
 if (form) {
   const botao = form.querySelector('button[type="submit"]');
+
+  // Campos dinâmicos: nome de cada pessoa da família
+  const acompInput = document.getElementById("acompanhantes");
+  const presencaSel = document.getElementById("presenca");
+  const familiaWrap = document.getElementById("familia-wrap");
+  const familiaLista = document.getElementById("familia-lista");
+
+  function renderFamilia() {
+    if (!familiaWrap || !familiaLista) return;
+    const n = Number(acompInput.value) || 1;
+    const extra = presencaSel.value === "nao" ? 0 : Math.max(0, n - 1);
+    if (extra <= 0) {
+      familiaWrap.hidden = true;
+      familiaLista.innerHTML = "";
+      return;
+    }
+    familiaWrap.hidden = false;
+    const antigos = Array.from(familiaLista.querySelectorAll("input")).map((i) => i.value);
+    let html = "";
+    for (let i = 0; i < extra; i++) {
+      const v = antigos[i] ? ` value="${antigos[i].replace(/"/g, "&quot;")}"` : "";
+      html += `<input type="text" placeholder="Nome da ${i + 2}ª pessoa"${v} />`;
+    }
+    familiaLista.innerHTML = html;
+  }
+  if (acompInput) acompInput.addEventListener("input", renderFamilia);
+  if (presencaSel) presencaSel.addEventListener("change", renderFamilia);
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nome = document.getElementById("nome").value.trim();
@@ -168,11 +197,24 @@ if (form) {
       return;
     }
 
+    // Nome de cada pessoa da família (obrigatório quando vai comparecer)
+    let familia = [nome];
+    if (presenca !== "nao" && acompanhantes > 1) {
+      const nomes = Array.from(document.querySelectorAll("#familia-lista input")).map((i) =>
+        i.value.trim()
+      );
+      if (nomes.some((v) => !v)) {
+        mostrar("Por favor, informe o nome de cada pessoa da sua família.", true);
+        return;
+      }
+      familia = [nome, ...nomes];
+    }
+
     botao.disabled = true;
     const textoOriginal = botao.textContent;
     botao.textContent = "Enviando...";
     try {
-      await enviar({ nome, presenca, acompanhantes, mensagem });
+      await enviar({ nome, presenca, acompanhantes, mensagem, familia });
       mostrar(
         presenca === "nao"
           ? `Obrigado pelo carinho, ${nome}! Vamos sentir sua falta ❤`
@@ -180,6 +222,7 @@ if (form) {
       );
       form.reset();
       document.getElementById("acompanhantes").value = 1;
+      renderFamilia();
     } catch (err) {
       console.error(err);
       mostrar("Ops! Não conseguimos enviar agora. Tente novamente em instantes.", true);

@@ -52,14 +52,20 @@ function renderConfirmacoes(lista) {
     body.innerHTML = '<tr><td colspan="5" class="empty">Nenhuma confirmação ainda.</td></tr>';
     return;
   }
-  body.innerHTML = lista.map((c) => `
+  body.innerHTML = lista.map((c) => {
+    const outros = Array.isArray(c.familia) ? c.familia.slice(1) : [];
+    const famHtml = outros.length
+      ? `<div class="fam">${outros.map((n) => "• " + escapeHtml(n)).join("<br>")}</div>`
+      : "";
+    return `
     <tr>
-      <td>${escapeHtml(c.nome)}</td>
+      <td><strong>${escapeHtml(c.nome)}</strong>${famHtml}</td>
       <td>${rotulo[c.presenca] || escapeHtml(c.presenca || "—")}</td>
       <td>${c.presenca === "sim" ? (Number(c.acompanhantes) || 1) : "—"}</td>
       <td>${escapeHtml(c.mensagem) || "—"}</td>
       <td>${escapeHtml(fmt(c.criadoEm))}</td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
 }
 
 /* ================= FIREBASE ================= */

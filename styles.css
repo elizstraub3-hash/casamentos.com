@@ -549,6 +549,21 @@ img { max-width: 100%; display: block; }
   margin-bottom: 0.5rem;
 }
 .field__hint { text-transform: none; letter-spacing: 0; font-size: 0.72rem; color: var(--gold-dark); }
+.field__note {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 0.8rem;
+  background: var(--ivory);
+  border-left: 3px solid var(--gold);
+  padding: 0.7rem 0.9rem;
+  border-radius: 0 8px 8px 0;
+}
+.field__note strong { color: var(--gold-dark); }
+#familia-lista { display: flex; flex-direction: column; gap: 0.6rem; }
+#familia-lista input { width: 100%; }
 .field__counter { display: block; text-align: right; font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem; }
 .field__counter.ok { color: var(--gold-dark); }
 .field input,
