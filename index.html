@@ -192,11 +192,18 @@
       <img src="ornamento-floral.png" alt="" class="ornament" />
     </div>
     <p class="musica__intro">A canção que embala a nossa história &mdash; e que tocou pertinho do dia do pedido. Dá o play e sinta com a gente. &#127925;</p>
-    <div class="spotify-player">
-      <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1p6dBmCdP7xh3OMTYJDZPK?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Nossa música no Spotify"></iframe>
+    <div class="player">
+      <span class="player__cover" aria-hidden="true"></span>
+      <div class="player__info">
+        <span class="player__song">O Que É Que Tem</span>
+        <span class="player__artist">Jorge &amp; Mateus</span>
+        <div class="player__bar" id="audio-bar"><div class="player__progress" id="audio-progress"></div></div>
+      </div>
+      <button class="player__btn" id="audio-btn" type="button" aria-label="Tocar música">&#9654;</button>
+      <audio id="audio-el" src="nossa-musica.mp3" preload="none"></audio>
     </div>
     <p class="musica__link">
-      <a href="https://www.youtube.com/watch?v=51lOFuCR7dE" target="_blank" rel="noopener">&#9654; Ouvir a música completa no YouTube</a>
+      <a href="https://www.youtube.com/watch?v=51lOFuCR7dE" target="_blank" rel="noopener">&#9654; Ouvir também no YouTube</a>
     </p>
   </section>
 

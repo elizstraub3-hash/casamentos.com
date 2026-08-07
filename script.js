@@ -24,42 +24,34 @@ if (navToggle && navLinks) {
   });
 }
 
-/* ----- Nossa música (player só de áudio via YouTube) ----- */
-const playerBtn = document.getElementById("player-btn");
-if (playerBtn) {
-  let ytPlayer = null;
-  let tocando = false;
-  const PLAY = "▶";      // ▶
-  const PAUSE = "⏸";     // ⏸
+/* ----- Nossa música (player de áudio nativo) ----- */
+const audioEl = document.getElementById("audio-el");
+const audioBtn = document.getElementById("audio-btn");
+if (audioEl && audioBtn) {
+  const progresso = document.getElementById("audio-progress");
+  const barra = document.getElementById("audio-bar");
+  const PLAY = "▶";
+  const PAUSE = "⏸";
 
-  const atualizar = () => {
-    playerBtn.innerHTML = tocando ? PAUSE : PLAY;
-    playerBtn.setAttribute("aria-label", tocando ? "Pausar música" : "Tocar música");
-  };
-
-  // Carrega a API do YouTube uma vez
-  const tag = document.createElement("script");
-  tag.src = "https://www.youtube.com/iframe_api";
-  document.head.appendChild(tag);
-
-  window.onYouTubeIframeAPIReady = function () {
-    ytPlayer = new YT.Player("yt-audio", {
-      videoId: "51lOFuCR7dE",
-      playerVars: { playsinline: 1 },
-      events: {
-        onStateChange: (e) => {
-          tocando = e.data === YT.PlayerState.PLAYING;
-          atualizar();
-        },
-      },
-    });
-  };
-
-  playerBtn.addEventListener("click", () => {
-    if (!ytPlayer || typeof ytPlayer.playVideo !== "function") return;
-    if (tocando) ytPlayer.pauseVideo();
-    else ytPlayer.playVideo();
+  audioBtn.addEventListener("click", () => {
+    if (audioEl.paused) audioEl.play();
+    else audioEl.pause();
   });
+  audioEl.addEventListener("play", () => { audioBtn.innerHTML = PAUSE; audioBtn.setAttribute("aria-label", "Pausar música"); });
+  audioEl.addEventListener("pause", () => { audioBtn.innerHTML = PLAY; audioBtn.setAttribute("aria-label", "Tocar música"); });
+  audioEl.addEventListener("timeupdate", () => {
+    if (progresso && audioEl.duration) {
+      progresso.style.width = (audioEl.currentTime / audioEl.duration) * 100 + "%";
+    }
+  });
+  audioEl.addEventListener("ended", () => { audioBtn.innerHTML = PLAY; if (progresso) progresso.style.width = "0%"; });
+  if (barra) {
+    barra.addEventListener("click", (e) => {
+      if (!audioEl.duration) return;
+      const r = barra.getBoundingClientRect();
+      audioEl.currentTime = ((e.clientX - r.left) / r.width) * audioEl.duration;
+    });
+  }
 }
 
 /* ----- Galeria do casal (visualizador) ----- */
