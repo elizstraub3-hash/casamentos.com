@@ -111,35 +111,25 @@ if (isConfigured) {
     }
   }
 
-  esconderEmail();
+  // Sem senha: o painel autentica sozinho (por baixo dos panos) e abre direto.
+  const ADMIN_PASSWORD = "noivos";
+
+  // Já mostra o painel (com "Carregando...") — nada de tela de senha.
+  loginBox.classList.add("hidden");
+  dashboard.classList.remove("hidden");
 
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      loginBox.classList.add("hidden");
-      dashboard.classList.remove("hidden");
-      carregar();
-    } else {
-      loginBox.classList.remove("hidden");
-      dashboard.classList.add("hidden");
-    }
+    if (user) carregar();
   });
 
-  $("login-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const msg = $("login-msg");
-    msg.textContent = "Entrando...";
-    msg.classList.remove("err");
-    try {
-      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, $("senha").value);
-      msg.textContent = "";
-    } catch (err) {
-      console.error(err);
-      msg.textContent = "Senha incorreta.";
-      msg.classList.add("err");
-    }
+  // Login automático silencioso
+  signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD).catch((err) => {
+    console.error(err);
+    $("confirm-body").innerHTML =
+      '<tr><td colspan="5" class="empty">Não foi possível carregar agora. Recarregue a página.</td></tr>';
   });
 
-  $("logout").addEventListener("click", () => signOut(auth));
+  $("logout").addEventListener("click", () => { location.href = "index.html"; });
   $("refresh").addEventListener("click", carregar);
 } else {
   /* ================= MODO DEMONSTRAÇÃO ================= */
