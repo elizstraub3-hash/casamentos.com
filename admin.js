@@ -109,6 +109,26 @@ if (isConfigured) {
         });
       });
     }
+
+    // Cotas presenteadas
+    const NOMES = { geladeira: "Geladeira", tv: "Televisão", sofa: "Sofá", microondas2: "Micro-ondas (premium)", secadora: "Secadora", mesa: "Mesa de jantar", painel: "Painel para TV", chale: "Fim de semana no chalé" };
+    const brl = (v) => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    const kSnap = await getDocs(collection(db, "cotas"));
+    const porItem = {}; let total = 0;
+    kSnap.forEach((d) => {
+      const x = d.data(); const p = x.presente || "?";
+      if (!porItem[p]) porItem[p] = { n: 0, v: 0 };
+      porItem[p].n++; porItem[p].v += Number(x.valor) || 0; total += Number(x.valor) || 0;
+    });
+    const kbody = $("cotas-body");
+    if (kbody) {
+      const entradas = Object.entries(porItem);
+      kbody.innerHTML = entradas.length
+        ? entradas.map(([p, o]) => `<tr><td>${escapeHtml(NOMES[p] || p)}</td><td>${o.n}</td><td>${brl(o.v)}</td></tr>`).join("")
+        : '<tr><td colspan="3" class="empty">Nenhuma cota presenteada ainda.</td></tr>';
+      const tot = $("cotas-total");
+      if (tot) tot.textContent = total > 0 ? "Total arrecadado em cotas: " + brl(total) : "";
+    }
   }
 
   // Sem senha: o painel autentica sozinho (por baixo dos panos) e abre direto.

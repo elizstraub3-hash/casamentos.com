@@ -59,6 +59,12 @@ service cloud.firestore {
                     && request.resource.data.nome.size() > 0;
       allow read, update, delete: if request.auth != null;
     }
+    match /cotas/{doc} {
+      allow read: if true;
+      allow create: if request.resource.data.presente is string
+                    && request.resource.data.valor is number;
+      allow update, delete: if request.auth != null;
+    }
   }
 }
 ```
