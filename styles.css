@@ -659,6 +659,13 @@ img { max-width: 100%; display: block; }
   color: var(--ink);
   letter-spacing: 0.02em;
 }
+.gift__key--small {
+  font-family: "Courier New", monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  word-break: break-all;
+  line-height: 1.4;
+}
 .gift__holder {
   display: block;
   font-size: 0.9rem;
