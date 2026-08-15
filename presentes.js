@@ -76,37 +76,38 @@ function registrarCota(id, valor) {
 /* ---------- Renderiza os cards NA HORA ---------- */
 document.querySelectorAll(".presente-card[data-valor]").forEach((card) => {
   const valor = parseFloat(card.dataset.valor) || 0;
-  const cotas = parseInt(card.dataset.cotas) || 0;
+  const qtd = parseInt(card.dataset.qtd) || 1;   // quantas pessoas podem presentear (>1 só no voucher)
   const id = card.dataset.id;
   const precoEl = card.querySelector(".presente-card__preco");
   const btn = card.querySelector(".btn-pix");
   if (!btn || !precoEl) return;
 
-  if (cotas > 0 && id) {
-    const cotaValor = Math.round(valor / cotas);
+  if (qtd > 1 && id) {
+    // Presente com quantidade limitada (ex.: voucher) — cada pessoa paga o valor cheio
     let pegas = 0;
     const render = () => {
-      const restam = Math.max(0, cotas - pegas);
-      precoEl.innerHTML = `${brl(valor)}<span class="cota-info">${brl(cotaValor)} por cota &middot; restam ${restam} de ${cotas}</span>`;
-      if (restam <= 0) { btn.disabled = true; btn.innerHTML = "Cotas esgotadas &#128153;"; }
-      else { btn.disabled = false; btn.innerHTML = `&#128153; Dar 1 cota (${brl(cotaValor)})`; }
+      const restam = Math.max(0, qtd - pegas);
+      precoEl.innerHTML = `${brl(valor)}<span class="cota-info">restam ${restam} de ${qtd}</span>`;
+      if (restam <= 0) { btn.disabled = true; btn.innerHTML = "Já presenteado &#128153;"; }
+      else { btn.disabled = false; btn.innerHTML = "&#128153; Presentear"; }
     };
     render();
     btn.addEventListener("click", () => {
-      if (pegas >= cotas) return;
-      copiar(gerarPix(cotaValor), () => {});
+      if (pegas >= qtd) return;
+      copiar(gerarPix(valor), () => {});
       const ok = confirm(
-        `Copiamos o Pix desta cota (${brl(cotaValor)}). Faça o pagamento no app do seu banco.\n\n` +
-        `Já concluiu o Pix? Clique OK para reservar a sua cota. ❤`
+        `Copiamos o Pix (${brl(valor)}). Faça o pagamento no app do seu banco.\n\n` +
+        `Já concluiu o Pix? Clique OK para reservar. ❤`
       );
       if (!ok) return;
       pegas++;
       render();
-      toast("Cota reservada! Muito obrigado pelo carinho ❤");
-      registrarCota(id, cotaValor);
+      toast("Presente reservado! Muito obrigado pelo carinho ❤");
+      registrarCota(id, valor);
     });
     cotaCards.push({ id, setPegas: (n) => { pegas = n; render(); } });
   } else {
+    // Presente com valor cheio, sem limite de quantidade
     precoEl.textContent = valor > 0 ? brl(valor) : "Ver preço na loja";
     btn.addEventListener("click", () => {
       copiar(gerarPix(valor), () => toast(`Pix de ${brl(valor)} copiado! Cole no app do seu banco ❤`));

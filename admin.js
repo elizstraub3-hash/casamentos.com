@@ -111,7 +111,7 @@ if (isConfigured) {
     }
 
     // Cotas presenteadas
-    const NOMES = { geladeira: "Geladeira", tv: "Televisão", sofa: "Sofá", microondas2: "Micro-ondas (premium)", secadora: "Secadora", mesa: "Mesa de jantar", painel: "Painel para TV", chale: "Fim de semana no chalé" };
+    const NOMES = { vale500: "Vale-presente R$ 500", vale350: "Vale-presente R$ 350", vale250: "Vale-presente R$ 250", vale150: "Vale-presente R$ 150" };
     const brl = (v) => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     const kSnap = await getDocs(collection(db, "cotas"));
     const porItem = {}; let total = 0;
