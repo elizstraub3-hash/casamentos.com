@@ -858,18 +858,42 @@ img { max-width: 100%; display: block; }
 .presente-card {
   background: var(--white);
   border-radius: 18px;
-  padding: 2rem 1.6rem;
+  padding: 0;
+  overflow: hidden;
   text-align: center;
   box-shadow: var(--shadow);
   border: 1px solid rgba(127, 163, 198, 0.14);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
   transition: transform 0.3s ease;
 }
 .presente-card:hover { transform: translateY(-6px); }
 .presente-card__emoji { font-size: 2.6rem; line-height: 1; }
+/* Capa (meme) */
+.presente-card__capa {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  background: linear-gradient(135deg, #e7f0f9, #d6e5f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.presente-card__meme {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.presente-card__capa-emoji { font-size: 3.8rem; opacity: 0.85; }
+.presente-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.4rem 1.5rem 1.7rem;
+}
 .presente-card h3 {
   font-family: var(--serif);
   font-size: 1.5rem;
@@ -914,8 +938,9 @@ img { max-width: 100%; display: block; }
 /* Presentes: dois por linha no celular */
 @media (max-width: 680px) {
   .presentes-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
-  .presente-card { padding: 1.2rem 0.85rem; gap: 0.5rem; }
-  .presente-card__emoji { font-size: 2rem; }
+  .presente-card__capa { height: 130px; }
+  .presente-card__capa-emoji { font-size: 2.7rem; }
+  .presente-card__body { padding: 1rem 0.85rem 1.2rem; gap: 0.4rem; }
   .presente-card h3 { font-size: 1.1rem; }
   .presente-card__joke { font-size: 0.8rem; line-height: 1.45; }
   .presente-card__preco { font-size: 1.2rem; }
