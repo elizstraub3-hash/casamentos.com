@@ -885,8 +885,17 @@ img { max-width: 100%; display: block; }
   height: 100%;
   object-fit: cover;
   display: block;
+  z-index: 1;
 }
-.presente-card__capa-emoji { font-size: 3.8rem; opacity: 0.85; }
+.presente-card__capa-emoji {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.8rem;
+  opacity: 0.85;
+  z-index: 0;
+}
 .presente-card__body {
   display: flex;
   flex-direction: column;
