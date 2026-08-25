@@ -338,6 +338,7 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--gold);
 }
 .btn--ghost:hover { background: var(--gold-dark); color: var(--white); border-color: var(--gold-dark); }
+.btn--gift { padding: 0.95rem 2.1rem; font-size: 0.82rem; }
 
 /* ===== Seções genéricas ===== */
 .section {
