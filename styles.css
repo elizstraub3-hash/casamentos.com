@@ -849,6 +849,40 @@ img { max-width: 100%; display: block; }
   font-size: 1.3rem;
   line-height: 1.6;
 }
+.presentes-passos {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: 1.6rem auto 0;
+  padding: 0;
+}
+.presentes-passos li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1px solid rgba(127, 163, 198, 0.22);
+  border-radius: 999px;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--ink);
+  box-shadow: 0 6px 16px rgba(53, 72, 90, 0.08);
+}
+.presentes-passos li span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--logo-blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
 .presentes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -857,23 +891,38 @@ img { max-width: 100%; display: block; }
   margin: 0 auto;
 }
 .presente-card {
+  --accent: #5b86b0;
+  --accent-soft: #e6eff8;
+  --accent-ink: #3c5f82;
+  position: relative;
   background: var(--white);
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 0;
   overflow: hidden;
   text-align: center;
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(127, 163, 198, 0.14);
-  transition: transform 0.3s ease;
+  box-shadow: 0 14px 30px rgba(53, 72, 90, 0.12);
+  border: 1px solid rgba(127, 163, 198, 0.12);
+  border-top: 5px solid var(--accent);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
 }
-.presente-card:hover { transform: translateY(-6px); }
+.presente-card:hover {
+  transform: translateY(-8px) rotate(-0.6deg);
+  box-shadow: 0 26px 46px rgba(53, 72, 90, 0.2);
+}
+/* Rotação de cores — cada card ganha uma cor, pra fugir do monótono */
+.presentes-grid > .presente-card:nth-child(6n + 1) { --accent: #5b86b0; --accent-soft: #e6eff8; --accent-ink: #38597c; }
+.presentes-grid > .presente-card:nth-child(6n + 2) { --accent: #e08a8a; --accent-soft: #fbe9e9; --accent-ink: #b85c5c; }
+.presentes-grid > .presente-card:nth-child(6n + 3) { --accent: #cba25e; --accent-soft: #f6edd8; --accent-ink: #97721e; }
+.presentes-grid > .presente-card:nth-child(6n + 4) { --accent: #7aa98a; --accent-soft: #e6f2ea; --accent-ink: #4d7a5d; }
+.presentes-grid > .presente-card:nth-child(6n + 5) { --accent: #9488c4; --accent-soft: #eeeaf8; --accent-ink: #675ba0; }
+.presentes-grid > .presente-card:nth-child(6n + 6) { --accent: #d98f5e; --accent-soft: #fbeadd; --accent-ink: #ad6733; }
 .presente-card__emoji { font-size: 2.6rem; line-height: 1; }
 /* Capa (meme) */
 .presente-card__capa {
   position: relative;
   width: 100%;
-  height: 190px;
-  background: linear-gradient(135deg, #e7f0f9, #d6e5f1);
+  height: 200px;
+  background: linear-gradient(135deg, var(--accent-soft), #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -888,27 +937,37 @@ img { max-width: 100%; display: block; }
   display: block;
   z-index: 1;
 }
+/* Emoji temático como adesivo no canto da capa */
 .presente-card__capa-emoji {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 3.8rem;
-  opacity: 0.85;
-  z-index: 0;
+  top: 10px;
+  left: 10px;
+  transform: none;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(53, 72, 90, 0.28);
+  opacity: 1;
+  z-index: 2;
 }
 .presente-card__body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  padding: 1.4rem 1.5rem 1.7rem;
+  gap: 0.55rem;
+  padding: 1.3rem 1.4rem 1.6rem;
 }
 .presente-card h3 {
   font-family: var(--serif);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.42rem;
+  font-weight: 700;
   color: var(--ink);
+  line-height: 1.2;
 }
 .presente-card__joke {
   color: var(--muted);
@@ -918,29 +977,47 @@ img { max-width: 100%; display: block; }
   flex: 1;
 }
 .presente-card__preco {
-  font-family: var(--display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--gold-dark);
-  margin-top: 0.2rem;
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border: 1.5px solid var(--accent);
+  padding: 0.42rem 1.1rem;
+  border-radius: 999px;
+  margin-top: 0.35rem;
 }
 .presente-card__acoes {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
 }
-.presente-card__acoes .btn { width: 100%; padding: 0.75rem 1rem; font-size: 0.72rem; }
+.presente-card__acoes .btn { width: 100%; padding: 0.8rem 1rem; font-size: 0.74rem; }
 .presente-card .btn { margin-top: 0.6rem; }
+/* Botão "Presentear" na cor do card */
+.presente-card .btn-pix {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  box-shadow: 0 8px 18px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.presente-card .btn-pix:hover {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--accent) 48%, transparent);
+}
 .cota-info {
   display: block;
   font-family: var(--sans);
-  font-size: 0.76rem;
-  font-weight: 400;
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--muted);
-  margin-top: 0.25rem;
+  color: var(--accent-ink);
+  margin-top: 0.1rem;
 }
 .btn-pix:disabled { background: var(--sand); color: var(--muted); cursor: default; }
 .btn-pix:disabled:hover { background: var(--sand); transform: none; }
@@ -948,14 +1025,15 @@ img { max-width: 100%; display: block; }
 /* Presentes: dois por linha no celular */
 @media (max-width: 680px) {
   .presentes-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
-  .presente-card__capa { height: 130px; }
-  .presente-card__capa-emoji { font-size: 2.7rem; }
+  .presente-card__capa { height: 140px; }
+  .presente-card__capa-emoji { width: 38px; height: 38px; font-size: 1.25rem; top: 8px; left: 8px; }
   .presente-card__body { padding: 1rem 0.85rem 1.2rem; gap: 0.4rem; }
-  .presente-card h3 { font-size: 1.1rem; }
+  .presente-card h3 { font-size: 1.08rem; }
   .presente-card__joke { font-size: 0.8rem; line-height: 1.45; }
-  .presente-card__preco { font-size: 1.2rem; }
+  .presente-card__preco { font-size: 1rem; padding: 0.35rem 0.85rem; }
   .presente-card__acoes { gap: 0.4rem; }
-  .presente-card__acoes .btn { padding: 0.6rem 0.4rem; font-size: 0.58rem; letter-spacing: 0.06em; }
+  .presente-card__acoes .btn { padding: 0.65rem 0.4rem; font-size: 0.6rem; letter-spacing: 0.05em; }
+  .presentes-passos li { font-size: 0.74rem; }
 }
 
 /* Toast (aviso de Pix copiado) */
