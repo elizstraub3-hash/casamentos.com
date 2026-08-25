@@ -59,6 +59,24 @@
     .tag.nao { background: #f8e6df; color: var(--no); }
     .empty { color: var(--muted); font-style: italic; padding: 0.5rem; }
     .fam { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.5; }
+    /* Dropdown de integrantes da família */
+    .fam-dd { margin-top: 0.45rem; }
+    .fam-dd > summary {
+      cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--ink);
+      background: #eef4fa; border: 1px solid #d3e2f1; border-radius: 999px;
+      padding: 0.28rem 0.7rem; user-select: none;
+    }
+    .fam-dd > summary::-webkit-details-marker { display: none; }
+    .fam-dd > summary::before { content: "\25B8"; font-size: 0.7rem; transition: transform 0.15s; }
+    .fam-dd[open] > summary::before { transform: rotate(90deg); }
+    .fam-list { margin: 0.5rem 0 0.2rem; padding-left: 1.3rem; }
+    .fam-list li { font-size: 0.86rem; color: var(--ink); margin: 0.12rem 0; }
+    .fam-tag {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+      color: #38597c; background: #e6eff8; border-radius: 6px; padding: 0.05rem 0.35rem; margin-left: 0.3rem;
+    }
+    .fam-solo { font-size: 0.78rem; color: var(--muted); }
     .tools { display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .note { background: #fff6e5; border: 1px solid #f0dfb3; color: #8a6d2f; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; font-size: 0.9rem; }
     .del { background: none; border: none; color: var(--no); cursor: pointer; font-size: 0.8rem; }

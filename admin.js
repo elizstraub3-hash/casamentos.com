@@ -38,8 +38,12 @@ const rotulo = { sim: '<span class="tag sim">Vai</span>', talvez: '<span class="
 function renderConfirmacoes(lista) {
   const body = $("confirm-body");
   let sim = 0, talvez = 0, nao = 0, pessoas = 0;
+  const totalPessoas = (c) => {
+    const n = Array.isArray(c.familia) && c.familia.length ? c.familia.length : 0;
+    return n || Number(c.acompanhantes) || 1;
+  };
   lista.forEach((c) => {
-    if (c.presenca === "sim") { sim++; pessoas += Number(c.acompanhantes) || 1; }
+    if (c.presenca === "sim") { sim++; pessoas += totalPessoas(c); }
     else if (c.presenca === "talvez") talvez++;
     else if (c.presenca === "nao") nao++;
   });
@@ -53,15 +57,32 @@ function renderConfirmacoes(lista) {
     return;
   }
   body.innerHTML = lista.map((c) => {
-    const outros = Array.isArray(c.familia) ? c.familia.slice(1) : [];
-    const famHtml = outros.length
-      ? `<div class="fam">${outros.map((n) => "• " + escapeHtml(n)).join("<br>")}</div>`
-      : "";
+    // Lista completa de integrantes (quem confirmou é o primeiro nome)
+    const familia = Array.isArray(c.familia) && c.familia.length
+      ? c.familia
+      : [c.nome];
+    const total = familia.length;
+
+    let famHtml = "";
+    if (c.presenca !== "nao" && total > 1) {
+      famHtml = `
+        <details class="fam-dd">
+          <summary>Ver os ${total} nomes</summary>
+          <ol class="fam-list">
+            ${familia.map((n, i) =>
+              `<li>${escapeHtml(n)}${i === 0 ? '<span class="fam-tag">quem confirmou</span>' : ""}</li>`
+            ).join("")}
+          </ol>
+        </details>`;
+    } else if (c.presenca !== "nao") {
+      famHtml = '<div class="fam-solo">Vai sozinho(a)</div>';
+    }
+
     return `
     <tr>
       <td><strong>${escapeHtml(c.nome)}</strong>${famHtml}</td>
       <td>${rotulo[c.presenca] || escapeHtml(c.presenca || "—")}</td>
-      <td>${c.presenca === "sim" ? (Number(c.acompanhantes) || 1) : "—"}</td>
+      <td>${c.presenca === "sim" ? total : "—"}</td>
       <td>${escapeHtml(c.mensagem) || "—"}</td>
       <td>${escapeHtml(fmt(c.criadoEm))}</td>
     </tr>`;
