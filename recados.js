@@ -64,11 +64,18 @@ if (isConfigured) {
     );
 
     resolverBackend(async ({ nome, presenca, acompanhantes, mensagem, familia }) => {
+      // A CONFIRMAÇÃO é o que importa — se ela salvar, o envio é sucesso.
       await addDoc(collection(db, "confirmacoes"), {
         nome, presenca, acompanhantes, familia: familia || [nome], mensagem, criadoEm: serverTimestamp(),
       });
+      // O recado do mural é secundário: se falhar (ex.: regra ainda não publicada),
+      // NÃO derruba a confirmação — apenas registra no console.
       if (mensagem) {
-        await addDoc(collection(db, "recados"), { nome, mensagem, criadoEm: serverTimestamp() });
+        try {
+          await addDoc(collection(db, "recados"), { nome, mensagem, criadoEm: serverTimestamp() });
+        } catch (e) {
+          console.error("Recado do mural não pôde ser salvo (confirmação foi salva):", e);
+        }
       }
     });
   })().catch((e) => {
