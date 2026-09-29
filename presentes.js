@@ -1,7 +1,8 @@
 /* ============================================================
-   Lista de Presentes — Pix por item e sistema de cotas
-   Os cards aparecem na hora; as cotas (coleção "cotas" do Firestore)
-   carregam em segundo plano, sem travar a página.
+   Lista de Presentes — Pix por item + registro de doação
+   Uma doação só é registrada quando a pessoa escreve o NOME e
+   confirma que fez o Pix (janela de confirmação). O nome vai
+   para o painel dos noivos. As cotas carregam em segundo plano.
    ============================================================ */
 import { firebaseConfig, isConfigured } from "./firebase-config.js";
 
@@ -60,16 +61,74 @@ function copiar(texto, cb) {
   }
 }
 
-/* ---------- Estado das cotas ---------- */
+/* ---------- Estado das cotas/doações ---------- */
 let db = null, _collection, _addDoc, _getDocs, _serverTimestamp;
-const pendentes = [];               // cotas dadas antes do Firebase carregar
-const cotaCards = [];               // controladores por card
+const pendentes = [];               // doações feitas antes do Firebase carregar
+const cotaCards = [];               // controladores dos vouchers
 
-function registrarCota(id, valor) {
+function registrarDoacao({ id, titulo, valor, nome }) {
   if (db) {
-    _addDoc(_collection(db, "cotas"), { presente: id, valor, criadoEm: _serverTimestamp() }).catch((e) => console.error(e));
+    _addDoc(_collection(db, "cotas"), {
+      presente: id, presenteNome: titulo, nome, valor, criadoEm: _serverTimestamp(),
+    }).catch((e) => console.error("Não foi possível registrar a doação:", e));
   } else {
-    pendentes.push({ presente: id, valor });
+    pendentes.push({ id, titulo, valor, nome });
+  }
+}
+
+/* ---------- Janela de confirmação (pede o nome) ---------- */
+const overlay = document.getElementById("doar-overlay");
+const elTitulo = document.getElementById("doar-titulo");
+const elValor = document.getElementById("doar-valor");
+const elNome = document.getElementById("doar-nome");
+const elErro = document.getElementById("doar-erro");
+const btnConfirmar = document.getElementById("doar-confirmar");
+const btnCancelar = document.getElementById("doar-cancelar");
+const btnX = document.getElementById("doar-x");
+const btnRecopiar = document.getElementById("doar-recopiar");
+
+let modalConfirmar = null;   // callback ao confirmar
+let modalValor = 0;          // valor do presente atual (para recopiar)
+
+function abrirModal({ titulo, valor, onConfirm }) {
+  if (!overlay) { // fallback: sem modal no HTML, usa confirm simples
+    const nome = (prompt("Qual o seu nome? (para os noivos saberem quem presenteou)") || "").trim();
+    if (nome) onConfirm(nome);
+    return;
+  }
+  modalConfirmar = onConfirm;
+  modalValor = valor;
+  elTitulo.textContent = titulo;
+  elValor.textContent = valor > 0 ? brl(valor) : "";
+  elNome.value = "";
+  if (elErro) elErro.hidden = true;
+  overlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  setTimeout(() => elNome && elNome.focus(), 60);
+}
+function fecharModal() {
+  if (!overlay) return;
+  overlay.hidden = true;
+  modalConfirmar = null;
+  document.body.style.overflow = "";
+}
+if (overlay) {
+  btnConfirmar.addEventListener("click", () => {
+    const nome = elNome.value.trim();
+    if (nome.length < 2) { if (elErro) elErro.hidden = false; elNome.focus(); return; }
+    const fn = modalConfirmar;
+    fecharModal();
+    if (fn) fn(nome);
+  });
+  elNome.addEventListener("keydown", (e) => { if (e.key === "Enter") btnConfirmar.click(); });
+  btnCancelar.addEventListener("click", fecharModal);
+  btnX.addEventListener("click", fecharModal);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) fecharModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !overlay.hidden) fecharModal(); });
+  if (btnRecopiar) {
+    btnRecopiar.addEventListener("click", () => {
+      copiar(gerarPix(modalValor), () => toast("Pix copiado de novo! ❤"));
+    });
   }
 }
 
@@ -78,12 +137,13 @@ document.querySelectorAll(".presente-card[data-valor]").forEach((card) => {
   const valor = parseFloat(card.dataset.valor) || 0;
   const qtd = parseInt(card.dataset.qtd) || 1;   // quantas pessoas podem presentear (>1 só no voucher)
   const id = card.dataset.id;
+  const titulo = (card.querySelector("h3")?.textContent || id || "Presente").trim();
   const precoEl = card.querySelector(".presente-card__preco");
   const btn = card.querySelector(".btn-pix");
   if (!btn || !precoEl) return;
 
   if (qtd > 1 && id) {
-    // Presente com quantidade limitada (ex.: voucher) — cada pessoa paga o valor cheio
+    // Voucher: até "qtd" pessoas podem presentear, cada uma paga o valor cheio
     let pegas = 0;
     const render = () => {
       const restam = Math.max(0, qtd - pegas);
@@ -95,22 +155,28 @@ document.querySelectorAll(".presente-card[data-valor]").forEach((card) => {
     btn.addEventListener("click", () => {
       if (pegas >= qtd) return;
       copiar(gerarPix(valor), () => {});
-      const ok = confirm(
-        `Copiamos o Pix (${brl(valor)}). Faça o pagamento no app do seu banco.\n\n` +
-        `Já concluiu o Pix? Clique OK para reservar. ❤`
-      );
-      if (!ok) return;
-      pegas++;
-      render();
-      toast("Presente reservado! Muito obrigado pelo carinho ❤");
-      registrarCota(id, valor);
+      abrirModal({
+        titulo, valor,
+        onConfirm: (nome) => {
+          pegas++; render();
+          registrarDoacao({ id, titulo, valor, nome });
+          toast(`Presente reservado, ${nome}! Muito obrigado pelo carinho ❤`);
+        },
+      });
     });
     cotaCards.push({ id, setPegas: (n) => { pegas = n; render(); } });
   } else {
-    // Presente com valor cheio, sem limite de quantidade
+    // Presente comum (sem limite de quantidade)
     precoEl.textContent = valor > 0 ? brl(valor) : "Ver preço na loja";
     btn.addEventListener("click", () => {
-      copiar(gerarPix(valor), () => toast(`Pix de ${brl(valor)} copiado! Cole no app do seu banco ❤`));
+      copiar(gerarPix(valor), () => {});
+      abrirModal({
+        titulo, valor,
+        onConfirm: (nome) => {
+          registrarDoacao({ id, titulo, valor, nome });
+          toast(`Obrigado, ${nome}! Seu presente foi registrado com carinho ❤`);
+        },
+      });
     });
   }
 });
@@ -125,10 +191,10 @@ document.querySelectorAll(".presente-card[data-valor]").forEach((card) => {
     db = getFirestore(initializeApp(firebaseConfig));
     _collection = collection; _addDoc = addDoc; _getDocs = getDocs; _serverTimestamp = serverTimestamp;
 
-    // grava cotas que foram dadas antes do Firebase carregar
-    pendentes.splice(0).forEach((c) => registrarCota(c.presente, c.valor));
+    // grava doações que aconteceram antes do Firebase carregar
+    pendentes.splice(0).forEach((c) => registrarDoacao(c));
 
-    // conta as cotas já presenteadas e atualiza os cards
+    // conta as doações já feitas e atualiza os vouchers
     const map = {};
     const snap = await _getDocs(_collection(db, "cotas"));
     snap.forEach((d) => { const p = d.data().presente; map[p] = (map[p] || 0) + 1; });

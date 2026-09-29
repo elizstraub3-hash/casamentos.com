@@ -1054,6 +1054,63 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== Janela de confirmação de doação ===== */
+.doar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(40, 55, 71, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  z-index: 200;
+}
+.doar-overlay[hidden] { display: none; }
+.doar-modal {
+  position: relative;
+  background: var(--white);
+  border-radius: 20px;
+  max-width: 380px;
+  width: 100%;
+  padding: 2rem 1.6rem 1.6rem;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(40, 55, 71, 0.35);
+  animation: doarUp 0.25s ease;
+}
+@keyframes doarUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.doar-modal__x {
+  position: absolute; top: 0.7rem; right: 0.9rem;
+  background: none; border: none; font-size: 1.6rem; line-height: 1;
+  color: var(--muted); cursor: pointer;
+}
+.doar-modal__emoji { font-size: 2.4rem; }
+.doar-modal h3 {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 700;
+  color: var(--ink); margin: 0.3rem 0 0.1rem;
+}
+.doar-modal__valor {
+  font-family: var(--sans); font-weight: 800; font-size: 1.3rem;
+  color: var(--logo-blue); margin-bottom: 0.6rem;
+}
+.doar-modal__info { color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+.doar-modal__recopiar { margin: 0.9rem auto 1.1rem; font-size: 0.72rem; padding: 0.5rem 1.1rem; }
+.doar-modal label {
+  display: block; text-align: left; font-family: var(--sans);
+  font-size: 0.8rem; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem;
+}
+.doar-modal input {
+  width: 100%; padding: 0.8rem 1rem; border: 1.5px solid #d3e2f1;
+  border-radius: 12px; font-size: 1rem; font-family: var(--sans); color: var(--ink);
+}
+.doar-modal input:focus { outline: none; border-color: var(--logo-blue); }
+.doar-modal__erro { color: #c0392b; font-size: 0.82rem; margin-top: 0.45rem; text-align: left; }
+.doar-modal__acoes { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
+.doar-modal__acoes .btn { flex: 1; padding: 0.8rem 0.6rem; font-size: 0.72rem; }
+.doar-modal__cancelar { background: #eef2f6; color: var(--muted); border: none; }
+.doar-modal__cancelar:hover { background: #e2e8ee; }
+
 .presente-card--pix {
   background: linear-gradient(160deg, #eef4fa, #ffffff);
   border: 1px dashed var(--gold);

@@ -131,30 +131,36 @@ if (isConfigured) {
       });
     }
 
-    // Vouchers presenteados (não quebra o painel se a coleção/rule não existir)
+    // Presentes recebidos (doações) — mostra QUEM presenteou
     try {
       const NOMES = { vale500: "Vale-presente R$ 500", vale350: "Vale-presente R$ 350", vale250: "Vale-presente R$ 250", vale150: "Vale-presente R$ 150" };
       const brl = (v) => (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
       const kSnap = await getDocs(collection(db, "cotas"));
-      const porItem = {}; let total = 0;
-      kSnap.forEach((d) => {
-        const x = d.data(); const p = x.presente || "?";
-        if (!porItem[p]) porItem[p] = { n: 0, v: 0 };
-        porItem[p].n++; porItem[p].v += Number(x.valor) || 0; total += Number(x.valor) || 0;
-      });
+      const doacoes = kSnap.docs
+        .map((d) => ({ ...d.data(), criadoEm: toDate(d.data().criadoEm) }))
+        .sort((a, b) => (b.criadoEm || 0) - (a.criadoEm || 0));
+      let total = 0;
+      doacoes.forEach((x) => { total += Number(x.valor) || 0; });
       const kbody = $("cotas-body");
       if (kbody) {
-        const entradas = Object.entries(porItem);
-        kbody.innerHTML = entradas.length
-          ? entradas.map(([p, o]) => `<tr><td>${escapeHtml(NOMES[p] || p)}</td><td>${o.n}</td><td>${brl(o.v)}</td></tr>`).join("")
-          : '<tr><td colspan="3" class="empty">Nenhum voucher presenteado ainda.</td></tr>';
+        kbody.innerHTML = doacoes.length
+          ? doacoes.map((x) => {
+              const nomePresente = x.presenteNome || NOMES[x.presente] || x.presente || "—";
+              return `<tr>
+                <td>${escapeHtml(nomePresente)}</td>
+                <td><strong>${escapeHtml(x.nome) || "—"}</strong></td>
+                <td>${brl(x.valor)}</td>
+                <td>${escapeHtml(fmt(x.criadoEm))}</td>
+              </tr>`;
+            }).join("")
+          : '<tr><td colspan="4" class="empty">Nenhum presente recebido ainda.</td></tr>';
         const tot = $("cotas-total");
-        if (tot) tot.textContent = total > 0 ? "Total arrecadado em vouchers: " + brl(total) : "";
+        if (tot) tot.textContent = total > 0 ? "Total recebido em presentes: " + brl(total) : "";
       }
     } catch (e) {
-      console.error("Não foi possível ler os vouchers:", e);
+      console.error("Não foi possível ler os presentes:", e);
       const kbody = $("cotas-body");
-      if (kbody) kbody.innerHTML = '<tr><td colspan="3" class="empty">—</td></tr>';
+      if (kbody) kbody.innerHTML = '<tr><td colspan="4" class="empty">—</td></tr>';
     }
   }
 

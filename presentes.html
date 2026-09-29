@@ -1136,6 +1136,28 @@
     <p class="footer__credit">Criado por <span>Eliz Straub</span></p>
   </footer>
 
+  <!-- ===== JANELA DE CONFIRMAÇÃO DE DOAÇÃO ===== -->
+  <div class="doar-overlay" id="doar-overlay" hidden>
+    <div class="doar-modal" role="dialog" aria-modal="true" aria-labelledby="doar-titulo">
+      <button type="button" class="doar-modal__x" id="doar-x" aria-label="Fechar">&times;</button>
+      <span class="doar-modal__emoji" aria-hidden="true">&#127873;</span>
+      <h3 id="doar-titulo">Presentear</h3>
+      <p class="doar-modal__valor" id="doar-valor"></p>
+      <p class="doar-modal__info">
+        Já copiamos a chave <strong>Pix</strong> pra você! Faça o pagamento no app do seu
+        banco e, depois de pagar, escreva seu nome aqui embaixo pra confirmar. &#128153;
+      </p>
+      <button type="button" class="btn btn--ghost doar-modal__recopiar" id="doar-recopiar">Copiar o Pix de novo</button>
+      <label for="doar-nome">Seu nome</label>
+      <input type="text" id="doar-nome" placeholder="Quem está presenteando?" autocomplete="name" />
+      <p class="doar-modal__erro" id="doar-erro" hidden>Por favor, escreva seu nome. &#128591;</p>
+      <div class="doar-modal__acoes">
+        <button type="button" class="btn doar-modal__cancelar" id="doar-cancelar">Agora não</button>
+        <button type="button" class="btn btn--dark" id="doar-confirmar">Já fiz o Pix &#10084;</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="presentes.js"></script>
 </body>
 </html>
