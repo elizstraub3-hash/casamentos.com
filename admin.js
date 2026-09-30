@@ -53,9 +53,15 @@ function renderConfirmacoes(lista) {
   $("s-pessoas").textContent = pessoas;
 
   if (!lista.length) {
-    body.innerHTML = '<tr><td colspan="5" class="empty">Nenhuma confirmação ainda.</td></tr>';
+    body.innerHTML = '<tr><td colspan="6" class="empty">Nenhuma confirmação ainda.</td></tr>';
     return;
   }
+
+  // Detecta nomes repetidos (mesma pessoa que confirmou mais de uma vez)
+  const norm = (s) => String(s ?? "").trim().toLowerCase().replace(/\s+/g, " ");
+  const contagem = {};
+  lista.forEach((c) => { const k = norm(c.nome); if (k) contagem[k] = (contagem[k] || 0) + 1; });
+
   body.innerHTML = lista.map((c) => {
     // Lista completa de integrantes (quem confirmou é o primeiro nome)
     const familia = Array.isArray(c.familia) && c.familia.length
@@ -78,13 +84,21 @@ function renderConfirmacoes(lista) {
       famHtml = '<div class="fam-solo">Vai sozinho(a)</div>';
     }
 
+    const repetido = contagem[norm(c.nome)] > 1
+      ? '<span class="dup-tag" title="Este nome aparece mais de uma vez">repetido</span>'
+      : "";
+    const btnExcluir = c.id
+      ? `<button class="del del-confirm" data-id="${escapeHtml(c.id)}">excluir</button>`
+      : "";
+
     return `
-    <tr>
-      <td><strong>${escapeHtml(c.nome)}</strong>${famHtml}</td>
+    <tr${repetido ? ' class="row-dup"' : ""}>
+      <td><strong>${escapeHtml(c.nome)}</strong>${repetido}${famHtml}</td>
       <td>${rotulo[c.presenca] || escapeHtml(c.presenca || "—")}</td>
       <td>${c.presenca === "sim" ? total : "—"}</td>
       <td>${escapeHtml(c.mensagem) || "—"}</td>
       <td>${escapeHtml(fmt(c.criadoEm))}</td>
+      <td>${btnExcluir}</td>
     </tr>`;
   }).join("");
 }
@@ -106,7 +120,7 @@ if (isConfigured) {
   async function carregar() {
     // Confirmações
     const cSnap = await getDocs(query(collection(db, "confirmacoes"), orderBy("criadoEm", "desc")));
-    renderConfirmacoes(cSnap.docs.map((d) => ({ ...d.data(), criadoEm: toDate(d.data().criadoEm) })));
+    renderConfirmacoes(cSnap.docs.map((d) => ({ id: d.id, ...d.data(), criadoEm: toDate(d.data().criadoEm) })));
 
     // Recados (com opção de excluir)
     const rSnap = await getDocs(query(collection(db, "recados"), orderBy("criadoEm", "desc")));
@@ -167,6 +181,23 @@ if (isConfigured) {
   // Sem senha: o painel autentica sozinho (por baixo dos panos) e abre direto.
   const ADMIN_PASSWORD = "noivos";
 
+  // Excluir uma confirmação (ex.: alguém que confirmou duas vezes).
+  // Delegação no tbody — funciona mesmo depois de recarregar a lista.
+  $("confirm-body").addEventListener("click", async (e) => {
+    const btn = e.target.closest(".del-confirm");
+    if (!btn) return;
+    if (!confirm("Excluir esta confirmação? Essa ação não pode ser desfeita.")) return;
+    btn.disabled = true;
+    try {
+      await deleteDoc(doc(db, "confirmacoes", btn.dataset.id));
+      carregar();
+    } catch (err) {
+      console.error(err);
+      alert("Não foi possível excluir agora. Tente de novo.");
+      btn.disabled = false;
+    }
+  });
+
   // Já mostra o painel (com "Carregando...") — nada de tela de senha.
   loginBox.classList.add("hidden");
   dashboard.classList.remove("hidden");
@@ -179,7 +210,7 @@ if (isConfigured) {
   signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD).catch((err) => {
     console.error(err);
     $("confirm-body").innerHTML =
-      '<tr><td colspan="5" class="empty">Não foi possível carregar agora. Recarregue a página.</td></tr>';
+      '<tr><td colspan="6" class="empty">Não foi possível carregar agora. Recarregue a página.</td></tr>';
   });
 
   $("logout").addEventListener("click", () => { location.href = "index.html"; });

@@ -80,6 +80,12 @@
     .tools { display: flex; gap: 0.6rem; flex-wrap: wrap; }
     .note { background: #fff6e5; border: 1px solid #f0dfb3; color: #8a6d2f; border-radius: 12px; padding: 1rem 1.2rem; margin: 1.5rem 0; font-size: 0.9rem; }
     .del { background: none; border: none; color: var(--no); cursor: pointer; font-size: 0.8rem; }
+    .dup-tag {
+      display: inline-block; margin-left: 0.4rem; font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase; color: #b7791f;
+      background: #faf1dc; border-radius: 6px; padding: 0.08rem 0.4rem; vertical-align: middle;
+    }
+    .row-dup { background: #fffaf0; }
     .hidden { display: none !important; }
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 2rem; }
   </style>
@@ -131,10 +137,10 @@
         <div class="table-scroll">
           <table>
             <thead>
-              <tr><th>Nome</th><th>Presença</th><th>Pessoas</th><th>Recado</th><th>Data</th></tr>
+              <tr><th>Nome</th><th>Presença</th><th>Pessoas</th><th>Recado</th><th>Data</th><th></th></tr>
             </thead>
             <tbody id="confirm-body">
-              <tr><td colspan="5" class="empty">Carregando...</td></tr>
+              <tr><td colspan="6" class="empty">Carregando...</td></tr>
             </tbody>
           </table>
         </div>
